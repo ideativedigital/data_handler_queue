@@ -1,0 +1,28 @@
+{
+	"name": "ideativedigital/data_handler_queue",
+	"type": "typo3-cms-extension",
+	"description": "Provides an API for registering DataHandler data and commands and replay them asynchronously at a later point in time.",
+	"license": [
+		"GPL-2.0-or-later"
+	],
+	"authors": [
+		{
+			"name": "Francois Suter",
+			"role": "Developer"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Ideativedigital\\DataHandlerQueue\\": "Classes/"
+		}
+	},
+	"version": "0.0.1",
+	"require": {
+		"ext-json": "*",
+		"typo3/cms-core": ">=8.7.0,<10.0"
+	},
+	"replace": {
+		"data_handler_queue": "self.version",
+		"typo3-ter/data_handler_queue": "self.version"
+	}
+}
