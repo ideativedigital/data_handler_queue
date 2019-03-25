@@ -1,5 +1,5 @@
 <?php
-namespace Ideativeagency\DataHandlerQueue\Tests\Unit\Utility;
+namespace Ideativedigital\DataHandlerQueue\Tests\Unit\Utility;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -14,14 +14,14 @@ namespace Ideativeagency\DataHandlerQueue\Tests\Unit\Utility;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Ideativeagency\DataHandlerQueue\Utility\DataHandlerUtility;
+use Ideativedigital\DataHandlerQueue\Utility\DataHandlerUtility;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Test suite for the DataHandlerUtility class.
  *
- * @package Ideativeagency\DataHandlerQueue\Tests\Unit\Utility
+ * @package Ideativedigital\DataHandlerQueue\Tests\Unit\Utility
  */
 class DataHandlerUtilityTest extends UnitTestCase
 {
@@ -48,12 +48,53 @@ class DataHandlerUtilityTest extends UnitTestCase
                                 'data' => [],
                                 'commands' => []
                         ]
+                ],
+                'single data entry' => [
+                        'entries' => [
+                                0 => [
+                                        'tablename' => 'pages',
+                                        'fieldname' => 'title',
+                                        'record_uid' => '42',
+                                        'value' => 'Zaphod Beeblebrox'
+                                ]
+                        ],
+                        'result' => [
+                                'data' => [
+                                        'pages' => [
+                                                '42' => [
+                                                        'title' => 'Zaphod Beeblebrox'
+                                                ]
+                                        ]
+                                ],
+                                'commands' => []
+                        ]
+                ],
+                'single command entry' => [
+                        'entries' => [
+                                0 => [
+                                        'tablename' => 'pages',
+                                        'command' => 'delete',
+                                        'record_uid' => '42',
+                                        'value' => 1
+                                ]
+                        ],
+                        'result' => [
+                                'data' => [],
+                                'commands' => [
+                                        'pages' => [
+                                                '42' => [
+                                                        'delete' => 1
+                                                ]
+                                        ]
+                                ]
+                        ]
                 ]
         ];
     }
 
     /**
      * @test
+     * @dataProvider entriesProviders
      * @param array $entries
      * @param array $result
      */

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ideativeagency\DataHandlerQueue\Command;
+namespace Ideativedigital\DataHandlerQueue\Command;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,8 +15,8 @@ namespace Ideativeagency\DataHandlerQueue\Command;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Ideativeagency\DataHandlerQueue\Domain\Repository\EntryRepository;
-use Ideativeagency\DataHandlerQueue\Utility\DataHandlerUtility;
+use Ideativedigital\DataHandlerQueue\Domain\Repository\EntryRepository;
+use Ideativedigital\DataHandlerQueue\Utility\DataHandlerUtility;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -28,7 +28,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Command line tool to execute stored TCE commands or data.
  *
- * @package Ideativeagency\DataHandlerQueue\Command
+ * @package Ideativedigital\DataHandlerQueue\Command
  */
 class ExecuteQueueCommand extends Command
 {

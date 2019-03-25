@@ -1,5 +1,5 @@
 <?php
-namespace Ideativeagency\DataHandlerQueue\Utility;
+namespace Ideativedigital\DataHandlerQueue\Utility;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -24,6 +24,29 @@ class DataHandlerUtility
      */
     public function generateStructure(array $entries)
     {
-        return [];
+        $structure = [
+                'data' => [],
+                'commands' => []
+        ];
+        foreach ($entries as $entry) {
+            // If the command field is empty, it's a data entry
+            if (empty($entry['command'])) {
+                if (!array_key_exists($entry['tablename'], $structure['data'])) {
+                    $structure['data'][$entry['tablename']] = [];
+                }
+                $structure['data'][$entry['tablename']][$entry['record_uid']] = [
+                        $entry['fieldname'] => $entry['value']
+                ];
+            // It's a command entry
+            } else {
+                if (!array_key_exists($entry['tablename'], $structure['data'])) {
+                    $structure['commands'][$entry['tablename']] = [];
+                }
+                $structure['commands'][$entry['tablename']][$entry['record_uid']] = [
+                        $entry['command'] => $entry['value']
+                ];
+            }
+        }
+        return $structure;
     }
 }

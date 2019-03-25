@@ -1,5 +1,5 @@
 <?php
-namespace Ideativeagency\DataHandlerQueue\Domain\Repository;
+namespace Ideativedigital\DataHandlerQueue\Domain\Repository;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -21,7 +21,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Class for CRUD operations with queue entries.
  *
- * @package Ideativeagency\DataHandlerQueue\Command
+ * @package Ideativedigital\DataHandlerQueue\Command
  */
 class EntryRepository
 {

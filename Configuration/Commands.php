@@ -1,6 +1,6 @@
 <?php
 return [
         'datahandlerqueue:execute' => [
-                'class' => \Ideativeagency\DataHandlerQueue\Command\ExecuteQueueCommand::class
+                'class' => \Ideativedigital\DataHandlerQueue\Command\ExecuteQueueCommand::class
         ]
 ];
