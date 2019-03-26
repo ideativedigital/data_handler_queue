@@ -22,6 +22,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -62,6 +63,9 @@ class ExecuteQueueCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        // Make sure the _cli_ user is loaded
+        Bootstrap::getInstance()->initializeBackendAuthentication();
+
         $io = new SymfonyStyle($input, $output);
         $io->title('Executing DataHandler queue entries...');
 

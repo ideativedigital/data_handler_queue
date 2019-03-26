@@ -58,7 +58,7 @@ class DataHandlerUtility
                 $structure['data'][$entry['tablename']][$entry['record_uid']][$entry['fieldname']] = $entry['value'];
             // It's a command entry
             } else {
-                if (!array_key_exists($entry['tablename'], $structure['data'])) {
+                if (!array_key_exists($entry['tablename'], $structure['commands'])) {
                     $structure['commands'][$entry['tablename']] = [];
                 }
                 if (!array_key_exists($entry['record_uid'], $structure['commands'][$entry['tablename']])) {
