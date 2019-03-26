@@ -85,6 +85,22 @@ class EntryRepository
     }
 
     /**
+     * Resets the executed flag (to 0) for all records where it is set.
+     *
+     * @return void
+     */
+    public function resetExecuted()
+    {
+        $queryBuilder = $this->getQueryBuilder();
+        $queryBuilder->update('tx_datahandlerqueue_domain_model_entry')
+                ->set('executed', 0)
+                ->where(
+                        $queryBuilder->expr()->eq('executed', 1)
+                )
+                ->execute();
+    }
+
+    /**
      * Deletes all records that have been marked as executed.
      *
      * @return void
