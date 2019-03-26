@@ -14,15 +14,33 @@ namespace Ideativedigital\DataHandlerQueue\Utility;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Ideativedigital\DataHandlerQueue\Domain\Repository\EntryRepository;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+/**
+ * Tools to convert a list of stored entries into the DataHandler-compatible structure.
+ *
+ * @package Ideativedigital\DataHandlerQueue\Utility
+ */
 class DataHandlerUtility
 {
+    /**
+     * @var EntryRepository
+     */
+    protected $entryRepository;
+
+    public function __construct()
+    {
+        $this->entryRepository = GeneralUtility::makeInstance(EntryRepository::class);
+    }
+
     /**
      * Assembles a TCE structure for data and commands based on a list of stored entries.
      *
      * @param array $entries List of stored data and commands
      * @return array
      */
-    public function generateStructure(array $entries)
+    public function generateStructure(array $entries): array
     {
         $structure = [
                 'data' => [],
@@ -46,6 +64,8 @@ class DataHandlerUtility
                         $entry['command'] => $entry['value']
                 ];
             }
+            // Mark handled entries as executed
+            $this->entryRepository->setExecuted($entry['uid']);
         }
         return $structure;
     }

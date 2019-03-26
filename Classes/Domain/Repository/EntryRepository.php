@@ -1,4 +1,5 @@
 <?php
+
 namespace Ideativedigital\DataHandlerQueue\Domain\Repository;
 
 /*
@@ -38,11 +39,64 @@ class EntryRepository
     {
         $queryBuilder = $this->getQueryBuilder();
         $result = $queryBuilder->select('*')
-            ->from('tx_datahandlerqueue_domain_model_entry')
-            ->orderBy('uid')
-            ->setMaxResults($limit)
-            ->execute();
+                ->from('tx_datahandlerqueue_domain_model_entry')
+                ->orderBy('uid')
+                ->setMaxResults($limit)
+                ->execute();
         return $result->fetchAll();
+    }
+
+    /**
+     * Adds an entry to the DB.
+     *
+     * @param string $table Name of the affected table
+     * @param mixed $uid Id of the affected record (can be "NEW***" for a new record)
+     * @param mixed $value Value to store for data, or related to the command
+     * @param string $field Name of the affected field (in case of data)
+     * @param string $command Command to execute (empty for data)
+     * @return void (TODO: we could send some feedback about success or failure)
+     */
+    public function add($table, $uid, $value, $field, $command)
+    {
+        $queryBuilder = $this->getQueryBuilder();
+        $queryBuilder->insert('tx_datahandlerqueue_domain_model_entry')
+                ->values([
+                        'tablename' => $table,
+                        'fieldname' => $field,
+                        'record_uid' => $uid,
+                        'command' => $command,
+                        'value' => $value
+                ])
+                ->execute();
+    }
+
+    /**
+     * Sets the executed flag of the given record to true.
+     *
+     * @param int $uid Id of the record
+     * @return void
+     */
+    public function setExecuted(int $uid)
+    {
+        $queryBuilder = $this->getQueryBuilder();
+        $queryBuilder->update('tx_datahandlerqueue_domain_model_entry')
+                ->set('executed', 1)
+                ->execute();
+    }
+
+    /**
+     * Deletes all records that have been marked as executed.
+     *
+     * @return void
+     */
+    public function deleteAllExecuted()
+    {
+        $queryBuilder = $this->getQueryBuilder();
+        $queryBuilder->delete('tx_datahandlerqueue_domain_model_entry')
+                ->where(
+                        $queryBuilder->expr()->eq('executed', 1)
+                )
+                ->execute();
     }
 
     /**

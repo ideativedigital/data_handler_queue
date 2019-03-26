@@ -86,6 +86,8 @@ class ExecuteQueueCommand extends Command
             $dataHandler->start($structure['data'], $structure['commands']);
             $dataHandler->process_datamap();
             $dataHandler->process_cmdmap();
+            // Delete entries now that they have been executed
+            $entryRepository->deleteAllExecuted();
 
             $io->success('Execution finished successfully');
         }
