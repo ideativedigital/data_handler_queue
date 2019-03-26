@@ -52,21 +52,34 @@ class DataHandlerUtility
                 if (!array_key_exists($entry['tablename'], $structure['data'])) {
                     $structure['data'][$entry['tablename']] = [];
                 }
-                $structure['data'][$entry['tablename']][$entry['record_uid']] = [
-                        $entry['fieldname'] => $entry['value']
-                ];
+                if (!array_key_exists($entry['record_uid'], $structure['data'][$entry['tablename']])) {
+                    $structure['data'][$entry['tablename']][$entry['record_uid']] = [];
+                }
+                $structure['data'][$entry['tablename']][$entry['record_uid']][$entry['fieldname']] = $entry['value'];
             // It's a command entry
             } else {
                 if (!array_key_exists($entry['tablename'], $structure['data'])) {
                     $structure['commands'][$entry['tablename']] = [];
                 }
-                $structure['commands'][$entry['tablename']][$entry['record_uid']] = [
-                        $entry['command'] => $entry['value']
-                ];
+                if (!array_key_exists($entry['record_uid'], $structure['commands'][$entry['tablename']])) {
+                    $structure['commands'][$entry['tablename']][$entry['record_uid']] = [];
+                }
+                $structure['commands'][$entry['tablename']][$entry['record_uid']][$entry['command']] = $entry['value'];
             }
-            // Mark handled entries as executed
-            $this->entryRepository->setExecuted($entry['uid']);
         }
         return $structure;
+    }
+
+    /**
+     * Marks a list of entries as having been executed.
+     *
+     * @param array $entries List of entries to handle
+     * @return void
+     */
+    public function markEntriesAsExecuted(array $entries)
+    {
+        foreach ($entries as $entry) {
+            $this->entryRepository->setExecuted($entry['uid']);
+        }
     }
 }

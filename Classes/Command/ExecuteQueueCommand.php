@@ -81,6 +81,8 @@ class ExecuteQueueCommand extends Command
             // Generate the DataHandler structure with the entries that were found
             $dataHandlerUtility = GeneralUtility::makeInstance(DataHandlerUtility::class);
             $structure = $dataHandlerUtility->generateStructure($entries);
+            // Mark the entries as executed. In case the script fails by running out of time or memory, we can check what was supposed to be handled
+            $dataHandlerUtility->markEntriesAsExecuted($entries);
             // Invoke the DataHandler and execute the data and commands
             $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
             $dataHandler->start($structure['data'], $structure['commands']);

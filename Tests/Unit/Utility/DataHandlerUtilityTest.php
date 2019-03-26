@@ -52,6 +52,7 @@ class DataHandlerUtilityTest extends UnitTestCase
                 'single data entry' => [
                         'entries' => [
                                 0 => [
+                                        'uid' => 1,
                                         'tablename' => 'pages',
                                         'fieldname' => 'title',
                                         'record_uid' => '42',
@@ -72,6 +73,7 @@ class DataHandlerUtilityTest extends UnitTestCase
                 'single command entry' => [
                         'entries' => [
                                 0 => [
+                                        'uid' => 1,
                                         'tablename' => 'pages',
                                         'command' => 'delete',
                                         'record_uid' => '42',
@@ -88,7 +90,36 @@ class DataHandlerUtilityTest extends UnitTestCase
                                         ]
                                 ]
                         ]
-                ]
+                ],
+                'multiple data entries for the same record' => [
+                        'entries' => [
+                                0 => [
+                                        'uid' => 1,
+                                        'tablename' => 'pages',
+                                        'fieldname' => 'title',
+                                        'record_uid' => '42',
+                                        'value' => 'Zaphod Beeblebrox'
+                                ],
+                                1 => [
+                                        'uid' => 2,
+                                        'tablename' => 'pages',
+                                        'fieldname' => 'nav_title',
+                                        'record_uid' => '42',
+                                        'value' => 'Heart of gold'
+                                ]
+                        ],
+                        'result' => [
+                                'data' => [
+                                        'pages' => [
+                                                '42' => [
+                                                        'title' => 'Zaphod Beeblebrox',
+                                                        'nav_title' => 'Heart of gold'
+                                                ]
+                                        ]
+                                ],
+                                'commands' => []
+                        ]
+                ],
         ];
     }
 
